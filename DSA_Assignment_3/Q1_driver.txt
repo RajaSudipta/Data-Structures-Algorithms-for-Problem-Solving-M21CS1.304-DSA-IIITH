@@ -1,0 +1,63 @@
+int main()
+{
+    autocomplete_set.clear();
+    int n;
+    cin >> n;
+    string temp;
+    TrieNode *root = new TrieNode();
+    BKTreeNode *BKroot = NULL;
+    for(int i=0; i<n; i++)
+    {
+        cin >> temp;
+        insertTrie(root, temp);
+        if(i == 0)
+        {
+            BKroot = new BKTreeNode(temp);
+        }
+        else
+        {
+            insertBKTreeNode(BKroot, temp);
+        }
+    }
+
+    int operation; 
+    bool flag;
+    autocomplete_set.clear();
+    autocorrect_set.clear();
+    cin >> operation;
+    if(operation == 1)
+    {
+        cin >> temp;
+        flag = searchTrie(root, temp);
+        cout << flag << endl;
+    }
+    else if(operation == 2)
+    {
+        cin >> temp;
+        autocomplete(root, temp);
+        if(autocomplete_set.size() == 0)
+        {
+            cout << 0 << endl;
+        }
+        else
+        {
+            cout << autocomplete_set.size() << endl;
+            for(auto it: autocomplete_set)
+            {
+                cout << it << endl;
+            }
+        }
+    }
+    else if(operation == 3)
+    {
+        cin >> temp;
+        autoCorrect(BKroot, temp);
+        cout << autocorrect_set.size() << endl;
+        for(auto it: autocorrect_set)
+        {
+            cout << it << endl;
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,53 @@
+int main()
+{
+    int n;
+    cin >> n;
+
+    int len;
+    cin >> len;
+
+    string str;
+    cin >> str;
+
+    // vector<int> suffix_array = buildSuffixArray(str, len);
+    vector<int> suffix_array = buildSuffixArrayUsingMap(str, len);
+
+    string res = "";
+
+    // int len = str.length();
+    int i = 0;
+
+    while (i < len - n + 1)
+    {
+        string stat = "";
+        int j = suffix_array[i];
+        bool flag = false;
+        int k = suffix_array[i + n - 1];
+        string temp = "";
+        while ((j < len && k < len) && (str[j] == str[k]))
+        {
+            temp = temp + str[j];
+            flag = true;
+            j += 1;
+            k += 1;
+        }
+        flag = true;
+        if (res.size() < temp.size())
+        {
+            res = temp;
+            flag = true;
+        }
+        i++;
+    }
+
+    if (res.length() == 0)
+    {
+        cout << -1 << endl;
+    }
+    else
+    {
+        cout << res.length() << endl;
+    }
+
+    return 0;
+}
